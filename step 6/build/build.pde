@@ -17,14 +17,17 @@ import controlP5.*;
 Minim minim;
 AudioInput audio;
 FFT audioFFT;
-ControlP5 amp;
+ControlP5 ampCtrl;
+ControlP5 indexCtrl;
+ControlP5 stepCtrl;
+ControlP5 rangeCtrl;
 
 // ================================================================
 
-int ampCtrl;
-int indexCtrl;
-int stepCtrl;
-int rangeCtrl;
+int ampVal;
+int indexVal;
+int stepVal;
+int rangeVal;
 
 // ================================================================
 
@@ -48,13 +51,12 @@ int stageH      = 700;
 
 // ================================================================
 
-
-
 int xStart       = stageM;
 int yStart       = stageM;
 int xSpace       = rectS;
 
 int valuePadding = 4;
+int labelW       = 80;
 
 // ================================================================
 
@@ -77,18 +79,39 @@ void setup() {
   audioFFT.window(FFT.GAUSS);
 
   // controllers
-  fill(50); noStroke();
-  rect(stageM, stageM + audioMax + (valuePadding * 2) + rectS, 200, rectS);
-  fill(#00AE55);
-  textAlign(LEFT);
-  text("amplifier – ", stageM + (rectS / 4), stageM + audioMax + (valuePadding * 2) + rectS + (rectS  - (rectS / 3)));
-  amp = new ControlP5(this);
-  amp.addSlider("ampCtrl")
-     .setPosition(stageM + 200 + valuePadding, stageM + audioMax + (valuePadding * 2) + rectS)
-     .setSize((audioRange * rectS) - 200 - valuePadding, rectS)
-     .setRange(0.0, 600.0)
-     .setValue(25.0)
-     .setColorCaptionLabel(color(20));
+  ampCtrl = new ControlP5(this);
+  ampCtrl.addSlider("ampVal")
+    .setPosition(stageM + labelW + valuePadding, stageM + audioMax + (valuePadding * 2) + rectS)
+    .setSize((audioRange * rectS) - labelW - valuePadding, rectS)
+    .setRange(0.0, 600.0)
+    .setValue(25.0)
+    .setColorCaptionLabel(color(20));
+
+  indexCtrl = new ControlP5(this);
+  indexCtrl.addSlider("indexVal")
+    .setPosition(stageM + labelW + valuePadding, stageM + audioMax + (valuePadding * 3) + (rectS * 2))
+    .setSize((audioRange * rectS) - labelW - valuePadding, rectS)
+    .setRange(0, 1000)
+    .setValue(500)
+    .setColorCaptionLabel(color(20));
+  
+  stepCtrl = new ControlP5(this);
+  stepCtrl.addSlider("stepVal")
+    .setPosition(stageM + labelW + valuePadding, stageM + audioMax + (valuePadding * 4) + (rectS * 3))
+    .setSize((audioRange * rectS) - labelW - valuePadding, rectS)
+    .setRange(0, 1000)
+    .setValue(250)
+    .setColorCaptionLabel(color(20));
+  
+  // rangeCtrl = new ControlP5(this);
+  // rangeCtrl.addSlider("rangeVal")
+  //   .setPosition(stageM + labelW + valuePadding, stageM + audioMax + (valuePadding * 5) + (rectS * 4))
+  //   .setSize((audioRange * rectS) - labelW - valuePadding, rectS)
+  //   .setRange(1, 256)
+  //   .setValue(12)
+  //   .setColorCaptionLabel(color(20));
+
+
 } 
 
 // ================================================================
@@ -96,7 +119,10 @@ void draw() {
   background(bgC);
 
   // linking controllers
-  audioAmp = ampCtrl;
+  audioAmp = ampVal;
+  audioIndex = (float)indexVal / 1000;
+  audioIndexStep = (float)stepVal / 1000;
+  // audioRange = rangeVal;
 
   // update display
   settingsStr = "amplifier: " + audioAmp + " // index start: " + audioIndex +  " // index step: " + audioIndexStep;
@@ -143,6 +169,27 @@ void draw() {
   }
 
   audioIndexAmp = audioIndex;
+
+  // controller labels
+  fill(50); noStroke();
+  rect(stageM, stageM + audioMax + (valuePadding * 2) + rectS, labelW, rectS);
+  fill(#ffa99a); textAlign(LEFT);
+  text("amplifier", stageM + (rectS / 4), stageM + audioMax + (valuePadding * 2) + rectS + (rectS  - (rectS / 3)));
+  
+  fill(50); noStroke();
+  rect(stageM, stageM + audioMax + (valuePadding * 3) + (rectS * 2), labelW, rectS);
+  fill(#ffa99a); textAlign(LEFT);
+  text("index", stageM + (rectS / 4), stageM + audioMax + (valuePadding * 3) + (rectS * 2) + (rectS  - (rectS / 3)));
+  
+  fill(50); noStroke();
+  rect(stageM, stageM + audioMax + (valuePadding * 4) + (rectS * 3), labelW, rectS);
+  fill(#ffa99a); textAlign(LEFT);
+  text("step", stageM + (rectS / 4), stageM + audioMax + (valuePadding * 4) + (rectS * 3) + (rectS  - (rectS / 3)));
+
+  // fill(50); noStroke();
+  // rect(stageM, stageM + audioMax + (valuePadding * 5) + (rectS * 4), labelW, rectS);
+  // fill(#ffa99a); textAlign(LEFT);
+  // text("range", stageM + (rectS / 4), stageM + audioMax + (valuePadding * 5) + (rectS * 4) + (rectS  - (rectS / 3)));
 
 }
 
