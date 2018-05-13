@@ -58,9 +58,11 @@ int stageH      = 700;
 
 
 
-int xStart      = stageM;
-int yStart      = stageM;
-int xSpace      = rectS;
+int xStart       = stageM;
+int yStart       = stageM;
+int xSpace       = rectS;
+
+int valuePadding = 4;
 
 // ================================================================
 
@@ -99,8 +101,10 @@ public void draw() {
 
     rect(xStart + (i * xSpace), yStart, rectS, indexCon);
 
+    // Print values
     fill(20); noStroke();
-    rect(xStart + (i * xSpace), stageM + audioMax + (stageM / 2), rectS, rectS);
+    rect(xStart + (i * xSpace) + (valuePadding / 2), stageM + audioMax + (stageM / 2) + (valuePadding / 2), rectS - valuePadding, rectS - valuePadding );
+
     fill(0xff00aeFF);
     textAlign(CENTER);
     text(str((int)indexAvg), xStart + (i * xSpace) + (rectS / 2), stageM + audioMax + (stageM / 2) + (rectS  - (rectS / 3)));
@@ -111,7 +115,7 @@ public void draw() {
   audioIndexAmp = audioIndex;
 
   stroke(0xffDD6600); noFill();
-  line(0, stageM + 100, width, stageM + 100);
+  line(stageM, stageM + 100, width - stageM, stageM + 100);
 
 
 }
