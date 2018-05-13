@@ -157,7 +157,6 @@ public void resetBtn(PGraphics scene, int x, int y){
     .addToggle("analyze")
     .setPosition(stageM, valuePadding)
     .setSize(rectS + (rectS / 3), rectS / 2)
-    .setValue(true)
     // .setMode(ControlP5.BUTTON)
     .setColorCaptionLabel(color(200));
 }
@@ -186,6 +185,7 @@ public void draw() {
   if (analyze) {
     rain.background(bgC);
     analyze = false;
+    resetBtn(rain, 0, (stageM * 2) + audioMax + (rectS * 4) + (valuePadding * 6));
   }
   rain.endDraw();
 
