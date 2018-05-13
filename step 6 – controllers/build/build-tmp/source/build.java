@@ -111,7 +111,7 @@ public void setup() {
   indexCtrl.addSlider("indexVal")
     .setPosition(stageM + labelW + valuePadding, stageM + audioMax + (valuePadding * 3) + (rectS * 2))
     .setSize((audioRange * rectS) - labelW - valuePadding, rectS)
-    .setRange(0, 1000)
+    .setRange(0, 100)
     .setValue(500)
     .setColorCaptionLabel(color(20));
   
@@ -171,7 +171,7 @@ public void draw() {
     // Render bars
     noStroke();
     if (indexCon < 35) fill(0xff00AE55, 255);
-    else if (indexCon < 75) fill(0xffDD6600, 255);
+    else if (indexCon < 75) fill(0xffFFD700, 255);
     else fill(0xffFF6644, 255);
     
     rect(xStart + (i * xSpace) + (valuePadding / 2), yStart + audioMax, rectS - valuePadding, - indexCon );
@@ -193,17 +193,17 @@ public void draw() {
   // controller labels
   fill(50); noStroke();
   rect(stageM, stageM + audioMax + (valuePadding * 2) + rectS, labelW, rectS);
-  fill(0xffffa99a); textAlign(LEFT);
+  fill(0xffF7F7F7); textAlign(LEFT);
   text("amplifier", stageM + (rectS / 4), stageM + audioMax + (valuePadding * 2) + rectS + (rectS  - (rectS / 3)));
   
   fill(50); noStroke();
   rect(stageM, stageM + audioMax + (valuePadding * 3) + (rectS * 2), labelW, rectS);
-  fill(0xffffa99a); textAlign(LEFT);
-  text("index", stageM + (rectS / 4), stageM + audioMax + (valuePadding * 3) + (rectS * 2) + (rectS  - (rectS / 3)));
+  fill(0xffF7F7F7); textAlign(LEFT);
+  text("start", stageM + (rectS / 4), stageM + audioMax + (valuePadding * 3) + (rectS * 2) + (rectS  - (rectS / 3)));
   
   fill(50); noStroke();
   rect(stageM, stageM + audioMax + (valuePadding * 4) + (rectS * 3), labelW, rectS);
-  fill(0xffffa99a); textAlign(LEFT);
+  fill(0xffF7F7F7); textAlign(LEFT);
   text("step", stageM + (rectS / 4), stageM + audioMax + (valuePadding * 4) + (rectS * 3) + (rectS  - (rectS / 3)));
 
   // fill(50); noStroke();
