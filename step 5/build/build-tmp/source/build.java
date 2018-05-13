@@ -114,9 +114,9 @@ public void draw() {
 
     // Render bars
     noStroke();
-    if (indexCon < 35) fill(0xff00AE55, 50);
-    else if (indexCon < 75) fill(0xffDD6600, 50);
-    else fill(0xffFF6644, 50);
+    if (indexCon < 35) fill(0xff00AE55, 75);
+    else if (indexCon < 75) fill(0xffDD6600, 75);
+    else fill(0xffFF6644, 75);
     
     rect(xStart + (i * xSpace) + (valuePadding / 2), yStart + audioMax, rectS - valuePadding, - indexCon );
     // rect(xStart + (i * xSpace) + (valuePadding / 2), yStart, rectS - valuePadding, indexAvg );

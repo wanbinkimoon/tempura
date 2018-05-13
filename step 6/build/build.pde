@@ -10,12 +10,21 @@ String  renderPATH = "../render/";
 
 import ddf.minim.*;
 import ddf.minim.analysis.*;
+import controlP5.*;
 
 // ================================================================
 
 Minim minim;
 AudioInput audio;
 FFT audioFFT;
+ControlP5 amp;
+
+// ================================================================
+
+int ampCtrl;
+int indexCtrl;
+int stepCtrl;
+int rangeCtrl;
 
 // ================================================================
 
@@ -66,11 +75,31 @@ void setup() {
 
   // audioFFT.window(FFT.NONE);
   audioFFT.window(FFT.GAUSS);
+
+  // controllers
+  fill(50); noStroke();
+  rect(stageM, stageM + audioMax + (valuePadding * 2) + rectS, 200, rectS);
+  fill(#00AE55);
+  textAlign(LEFT);
+  text("amplifier – ", stageM + (rectS / 4), stageM + audioMax + (valuePadding * 2) + rectS + (rectS  - (rectS / 3)));
+  amp = new ControlP5(this);
+  amp.addSlider("ampCtrl")
+     .setPosition(stageM + 200 + valuePadding, stageM + audioMax + (valuePadding * 2) + rectS)
+     .setSize((audioRange * rectS) - 200 - valuePadding, rectS)
+     .setRange(0.0, 600.0)
+     .setValue(25.0)
+     .setColorCaptionLabel(color(20));
 } 
 
 // ================================================================
 void draw() {
   background(bgC);
+
+  // linking controllers
+  audioAmp = ampCtrl;
+
+  // update display
+  settingsStr = "amplifier: " + audioAmp + " // index start: " + audioIndex +  " // index step: " + audioIndexStep;
 
   audioFFT.forward(audio.mix);
 
@@ -95,9 +124,9 @@ void draw() {
 
     // Render bars
     noStroke();
-    if (indexCon < 35) fill(#00AE55, 75);
-    else if (indexCon < 75) fill(#DD6600, 75);
-    else fill(#FF6644, 75);
+    if (indexCon < 35) fill(#00AE55, 255);
+    else if (indexCon < 75) fill(#DD6600, 255);
+    else fill(#FF6644, 255);
     
     rect(xStart + (i * xSpace) + (valuePadding / 2), yStart + audioMax, rectS - valuePadding, - indexCon );
     // rect(xStart + (i * xSpace) + (valuePadding / 2), yStart, rectS - valuePadding, indexAvg );
