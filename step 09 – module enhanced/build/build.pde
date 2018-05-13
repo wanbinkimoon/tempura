@@ -85,8 +85,16 @@ void setup() {
   audioFFT = new FFT(audio.bufferSize(), audio.sampleRate());
   audioFFT.linAverages(audioRange);
 
-  // audioFFT.window(FFT.NONE);
-  audioFFT.window(FFT.GAUSS);
+  audioFFT.window(FFT.NONE);
+  // audioFFT.window(FFT.BARTLETT);
+  // audioFFT.window(FFT.BARTLETTHANN);
+  // audioFFT.window(FFT.BLACKMAN);
+  // audioFFT.window(FFT.COSINE);
+  // audioFFT.window(FFT.GAUSS);
+  // audioFFT.window(FFT.HAMMING);
+  // audioFFT.window(FFT.HANN);
+  // audioFFT.window(FFT.LANCZOS);
+  // audioFFT.window(FFT.TRIANGULAR);
 
   spectrum.beginDraw();
     controllersRender(spectrum, 0, 0);
