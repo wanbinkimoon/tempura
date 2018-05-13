@@ -167,7 +167,7 @@ public void resetBtn(PGraphics scene, int x, int y){
     .addToggle("colorize")
     .setPosition(stageM + (rectS + (rectS / 3)) + valuePadding, valuePadding)
     .setSize(rectS + (rectS / 3), rectS / 2)
-    .setValue(true)
+    .setValue(false)
     // .setMode(ControlP5.BUTTON)
     .setColorCaptionLabel(color(200));
 }
