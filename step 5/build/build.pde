@@ -1,4 +1,4 @@
-color bgC       = #6F6F6F;
+color bgC       = 10;
 String dataPATH = "../../data/";
 
 // ================================================================
@@ -75,11 +75,11 @@ void draw() {
   audioFFT.forward(audio.mix);
 
   // Render stage
-  noStroke(); fill(50);
-  rect(stageM - (valuePadding / 2), stageM - (valuePadding / 2), (audioRange * rectS) + valuePadding, audioMax + valuePadding);
+  fill(25); noStroke(); 
+  rect(stageM, stageM - (valuePadding / 2), audioRange * rectS, audioMax + valuePadding);
 
   // Print values
-  fill(20); noStroke();
+  fill(50); noStroke();
   rect(stageM, stageM - (rectS + (valuePadding * 2)),(audioRange * rectS), rectS);
 
   fill(#00AE55);
@@ -95,16 +95,16 @@ void draw() {
 
     // Render bars
     noStroke();
-    fill(255, 35);
+    fill(#DD6600, indexCon * 2.55);
     
     rect(xStart + (i * xSpace) + (valuePadding / 2), yStart + audioMax, rectS - valuePadding, - indexCon );
     // rect(xStart + (i * xSpace) + (valuePadding / 2), yStart, rectS - valuePadding, indexAvg );
 
     // Print values
-    fill(20); noStroke();
+    fill(50); noStroke();
     rect(xStart + (i * xSpace) + (valuePadding / 2), stageM + audioMax + valuePadding + (valuePadding / 2), rectS - valuePadding, rectS - valuePadding );
 
-    fill(#00aeFF);
+    fill(#00AEFF);
     textAlign(CENTER);
     text(str((int)indexAvg), xStart + (i * xSpace) + (rectS / 2), stageM + audioMax + valuePadding + (rectS  - (rectS / 3)));
 

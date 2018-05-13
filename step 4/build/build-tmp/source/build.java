@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class build extends PApplet {
 
-int bgC       = 0xff2F2F2F;
+int bgC       = 0xff6F6F6F;
 String dataPATH = "../../data/";
 
 // ================================================================
@@ -93,6 +93,20 @@ public void draw() {
 
   audioFFT.forward(audio.mix);
 
+  // Render stage
+  noStroke(); fill(50);
+  rect(stageM - (valuePadding / 2), stageM - (valuePadding / 2), (audioRange * rectS) + valuePadding, audioMax + valuePadding);
+
+  // Print values
+  fill(20); noStroke();
+  rect(stageM, stageM - (rectS + (valuePadding * 2)),(audioRange * rectS), rectS);
+
+  fill(0xff00AE55);
+  textAlign(LEFT);
+  text(settingsStr, stageM + (rectS / 4), stageM - (rectS + (valuePadding * 2)) + (rectS  - (rectS / 3)));
+
+
+
   for (int i = 0; i < audioRange; ++i) {
 
     float indexAvg = (audioFFT.getAvg(i) * audioAmp) * audioIndexAmp;
@@ -117,21 +131,6 @@ public void draw() {
   }
 
   audioIndexAmp = audioIndex;
-  
-  noFill();
-  stroke(0xffBB6600); 
-  line(stageM, stageM, width - stageM, stageM);
-  stroke(0xffDD6600); 
-  line(stageM, stageM + 100, width - stageM, stageM + 100);
-
-  // Print values
-  fill(20); noStroke();
-  rect(stageM, stageM - (rectS + valuePadding),(audioRange * rectS), rectS);
-
-  fill(0xff00AE55);
-  textAlign(LEFT);
-  text(settingsStr, stageM + (rectS / 4), stageM - (rectS + valuePadding) + (rectS  - (rectS / 3)));
-
 
 }
 
