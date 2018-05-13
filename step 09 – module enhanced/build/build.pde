@@ -50,6 +50,7 @@ int rectS       = 30;
 // ================================================================
 
 boolean analyze = false;
+boolean colorize = false;
 
 // ================================================================
 
@@ -75,8 +76,8 @@ void settings(){
 // ================================================================
 
 void setup() {
-  spectrum = createGraphics(width, (stageM * 2) + audioMax + (rectS * 4) + (valuePadding * 6));
-  rain = createGraphics(width, height - (stageM * 2) + audioMax + (rectS * 4) + (valuePadding * 6));
+  spectrum = createGraphics(width, (stageM + ( stageM / 2 )) + audioMax + (rectS * 4) + (valuePadding * 6));
+  rain = createGraphics(width, height - (stageM + ( stageM / 2 )) + audioMax + (rectS * 4) + (valuePadding * 6));
 
   minim = new Minim(this);
   audio = minim.getLineIn(Minim.STEREO);
@@ -93,7 +94,7 @@ void setup() {
 
   rain.beginDraw();
     rain.background(bgC);
-    resetBtn(rain, 0, (stageM * 2) + audioMax + (rectS * 4) + (valuePadding * 6));
+    resetBtn(rain, 0, (stageM + ( stageM / 2 )) + audioMax + (rectS * 4) + (valuePadding * 6));
   rain.endDraw();
 } 
 
@@ -137,6 +138,16 @@ void resetBtn(PGraphics scene, int x, int y){
     .addToggle("analyze")
     .setPosition(stageM, valuePadding)
     .setSize(rectS + (rectS / 3), rectS / 2)
+    .setValue(true)
+    // .setMode(ControlP5.BUTTON)
+    .setColorCaptionLabel(color(200));
+
+  button
+    .setGraphics(scene, x, y)
+    .addToggle("colorize")
+    .setPosition(stageM + (rectS + (rectS / 3)) + valuePadding, valuePadding)
+    .setSize(rectS + (rectS / 3), rectS / 2)
+    .setValue(false)
     // .setMode(ControlP5.BUTTON)
     .setColorCaptionLabel(color(200));
 }
@@ -150,24 +161,21 @@ void draw() {
   audioIndexStep = (float)stepVal / 1000;
   audioFFT.forward(audio.mix);
 
+
   spectrum.beginDraw();
   spectrum.background(bgC);
   topBarRender(spectrum);
   barsRender(spectrum);
   controllersLabelRender(spectrum); 
   spectrum.endDraw();
-  // rendered by Controls
-  // image(spectrum, 100, 0); 
 
   rain.beginDraw();
-  rainRender(rain);
-  if (analyze) {
-    rain.background(bgC);
-    analyze = false;
-    resetBtn(rain, 0, (stageM * 2) + audioMax + (rectS * 4) + (valuePadding * 6));
-  }
+    rainRender(rain);
+    if (analyze) {
+      rain.background(bgC);
+      analyze = false;
+    }
   rain.endDraw();
-
 }
 
 // ================================================================
@@ -199,7 +207,7 @@ void barsRender(PGraphics scene){
     scene.noStroke();
     if (indexCon < 35) scene.fill(#00AE55, 255);
     else if (indexCon < 75) scene.fill(#FFD700, 255);
-    else fill(#FF6644, 255);
+    else scene.fill(#FF6644, 255);
     
     scene.rect(xStart + (i * xSpace) + (valuePadding / 2), yStart + audioMax, rectS - valuePadding, - indexCon );
     // rect(xStart + (i * xSpace) + (valuePadding / 2), yStart, rectS - valuePadding, indexAvg );
@@ -242,15 +250,25 @@ void controllersLabelRender(PGraphics scene){
 void rainRender(PGraphics scene){
   for (int i = 0; i < audioRange; ++i) {
     float indexAvg = (audioFFT.getAvg(i) * audioAmp) * audioIndexAmp;
-    scene.stroke(0); 
-    scene.fill(255, 25);
-    scene.rect(xStart + (i * xSpace), rectS * 2, rectS, indexAvg / 2);
+
+    if (colorize) {
+      scene.noFill();
+      if ((indexAvg / 2) < (audioMax / 4)) scene.stroke(#00AE55, 50);
+      else if ((indexAvg / 2) < (audioMax / 2)) scene.stroke(#FFD700, 50);
+      else scene.stroke(#FF6644, 50);
+    } else {
+      scene.noStroke();
+      scene.fill(#FF87B7, 50);
+    }
+
+    scene.rect(xStart + (i * xSpace) + (valuePadding / 2), rectS * 2, rectS - valuePadding, (indexAvg / 2));
 
     audioIndexAmp += audioIndexStep;  
   }
 
-  scene.stroke(#DD6600); scene.noFill();
-  scene.line(stageM, stageM + (audioMax / 2), width - stageM, stageM + (audioMax / 2));
+  scene.stroke(#F7F7F7); 
+  scene.noFill();
+  scene.line(stageM, (rectS * 2) + (audioMax / 2), width - stageM, (rectS * 2) + (audioMax / 2));
 
   audioIndexAmp = audioIndex;
 }

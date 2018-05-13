@@ -271,13 +271,14 @@ public void rainRender(PGraphics scene){
   for (int i = 0; i < audioRange; ++i) {
     float indexAvg = (audioFFT.getAvg(i) * audioAmp) * audioIndexAmp;
 
-    scene.noStroke();
     if (colorize) {
-      if ((indexAvg / 2) < (audioMax / 4)) scene.fill(0xff00AE55, 50);
-      else if ((indexAvg / 2) < (audioMax / 2)) scene.fill(0xffFFD700, 50);
-      else scene.fill(0xffFF6644, 50);
+      scene.noFill();
+      if ((indexAvg / 2) < (audioMax / 4)) scene.stroke(0xff00AE55, 50);
+      else if ((indexAvg / 2) < (audioMax / 2)) scene.stroke(0xffFFD700, 50);
+      else scene.stroke(0xffFF6644, 50);
     } else {
-      scene.fill(0xff00AEFF, 50);
+      scene.noStroke();
+      scene.fill(0xffFF87B7, 50);
     }
 
     scene.rect(xStart + (i * xSpace) + (valuePadding / 2), rectS * 2, rectS - valuePadding, (indexAvg / 2));
@@ -285,7 +286,9 @@ public void rainRender(PGraphics scene){
     audioIndexAmp += audioIndexStep;  
   }
 
-  scene.stroke(0xffDD6600); scene.noFill();
+  // scene.stroke(#DD6600); 
+  scene.stroke(0xffF7F7F7); 
+  scene.noFill();
   scene.line(stageM, (rectS * 2) + (audioMax / 2), width - stageM, (rectS * 2) + (audioMax / 2));
 
   audioIndexAmp = audioIndex;

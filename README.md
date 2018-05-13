@@ -1,5 +1,5 @@
 # Tempura
-🥕 tempura – Processing capture live sound
+🥕 tempura – Processing live sound analyser
 
 _______________________
 
